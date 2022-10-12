@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.normal_link {
+    @apply flex items-center gap-3 hover:bg-primary p-3 
+    duration-300 justify-center xl:justify-start cursor-pointer 
+    font-semibold text-[#f51997]
+}
+
+.active_topic_style {
+    @apply xl:border-2 hover:bg-primary xl:border-[#ff1997] px-3 py-2 
+    rounded xl:rounded-full flex items-center gap-2 justify-center 
+    cursor-pointer text-[#ff1997] duration-300
+}
+
+.topic_style { 
+    @apply xl:border-2 hover:bg-primary xl:border-gray-300 px-3 py-2 
+    rounded xl:rounded-full flex items-center gap-2 justify-center 
+    cursor-pointer text-black duration-300
+}

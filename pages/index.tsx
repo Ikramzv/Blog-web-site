@@ -20,8 +20,7 @@ interface HomeProps {
 }
 
 function Home({posts}: HomeProps) {
-  console.log(posts)
-  return <div>Hello world</div>;
+  return <div className='text-red-500 font-bold text-lg'>Hello world</div>;
 }
 
 const client = createClient({
