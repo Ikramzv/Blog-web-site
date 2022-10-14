@@ -1,6 +1,6 @@
+import { GoogleLogin } from '@react-oauth/google'
 import Link from "next/link"
 import { useState } from "react"
-import GoogleLogin from 'react-google-login'
 import { AiFillHome, AiOutlineMenu } from 'react-icons/ai'
 import { ImCancelCircle } from 'react-icons/im'
 import Discover from "./Discover"
@@ -36,20 +36,10 @@ const Sidebar = () => {
                         <p className="text-gray-400" >Log in to like and comment on videos</p>
                         <div className="pr-4">
                             <GoogleLogin
-                                clientId={''}
                                 onSuccess={() => {}}
-                                onFailure={() => {}}
-                                cookiePolicy={'single_host_origin'}
-                                render={(renderProps) => (
-                                    <button 
-                                    onClick={renderProps.onClick} 
-                                    disabled={renderProps.disabled} 
-                                    className="bg-white text-lg text-[#f51997] border-[1px] border-[#f51997] font-semibold px-6 
-                                    py-3 outline-none w-full mt-3 hover:text-white hover:bg-[#f51997] cursor-pointer duration-500"
-                                    >
-                                        Log in
-                                    </button>
-                                )}
+                                onError={() => {}}
+                                size={'large'}
+                                theme={'filled_black'}
                             />
                         </div>
                     </div>

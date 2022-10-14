@@ -1,41 +1,31 @@
-import { GetServerSideProps } from 'next';
-import { createClient } from 'next-sanity';
-type Comments = {
-  comment: string
-}
-type Posts = {
-  caption: string
-  comments: Comments[]
-  likes: {_ref: string}[]
-  topic: string
-  userId: string
-  video: {asset: { _ref: string }}
-  _createdAt: string
-  _id: string
-  _updatedAt: string
-}
+import axios from 'axios';
+import { GetServerSideProps, NextPage } from 'next';
+import NoResults from '../components/NoResults';
+import Post from '../components/Post';
+import { PostType } from '../types/Post';
 
 interface HomeProps {
-  posts: Posts[]
+  posts: PostType[]
 }
 
-function Home({posts}: HomeProps) {
-  return <div className='text-red-500 font-bold text-lg'>Hello world</div>;
+const Home: NextPage<HomeProps> = ({posts}) => {
+  console.log(posts)
+  return (
+    <div className='flex flex-col gap-10 videos h-full' >
+      {posts.length > 0 ? posts.map((post) => (
+        <Post post={post} key={post._id} />
+      )) : <NoResults text={'There is no Posts'} />}
+    </div>
+  )
 }
 
-const client = createClient({
-  projectId: 'hp58fg4f',
-  dataset: 'production',
-  useCdn: false,
-  apiVersion: '2022-10-11',
-})
 
-export const getServerSideProps: GetServerSideProps = async() => {
-  const posts = await client.fetch(`*[_type == 'post']`)
+export const getServerSideProps: GetServerSideProps = async({  }) => {
+  const { data } = await axios.get('http://localhost:3000/api/post')
   return {
     props: {
-      posts
-    }
+      posts: data
+    },
   }
 }
 

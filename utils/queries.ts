@@ -1,28 +1,28 @@
 export const allPostsQuery = () => {
-  const query = `*[_type == "post"] | order(_createdAt desc){
+  const query = `*[_type == "post" && !(_id match "drafts*") ] | order(_createdAt desc){
     _id,
-     caption,
-       video{
-        asset->{
-          _id,
-          url
-        }
-      },
-      userId,
-      postedBy->{
+    caption,
+    video{
+      asset->{
         _id,
-        userName,
-        image
-      },
+        url
+      }
+    },
+    userId,
+    postedBy->{
+      _id,
+      username,
+      image
+    },
     likes,
     comments[]{
       comment,
       _key,
       postedBy->{
-      _id,
-      userName,
-      image
-    },
+        _id,
+        userName,
+        image
+      },
     }
   }`;
 
