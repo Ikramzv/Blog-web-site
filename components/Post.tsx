@@ -14,7 +14,7 @@ interface PostInterface {
 const Post: NextComponentType<any,any,PostInterface> = ({ post }) => {
     const [isHover , setIsHover] = useState(false)
     const [playing , setPlaying] = useState(false)
-    const [muted, setMuted] = useState(false)
+    const [muted, setMuted] = useState(false) 
     const videoRef = useRef<HTMLVideoElement>(null)
 
     const onVideoPress = () => {
@@ -26,6 +26,7 @@ const Post: NextComponentType<any,any,PostInterface> = ({ post }) => {
             setPlaying(true)
         }
     }
+
 
   return (
     <div className='flex flex-col border-b-2 border-gray-200 pb-6'>
@@ -60,13 +61,14 @@ const Post: NextComponentType<any,any,PostInterface> = ({ post }) => {
                 </div>
             </div>
         </div>
-        <div className='lg:ml-20 flex gap-4 relative' >
+        <div className='lg:ml-20 flex flex-col gap-4 relative'>
+            <p className='text-base text-gray-600 border-b-2 border-gray-200 pb-2' >{post.caption}</p>
             <div className='rounded-3xl' onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)} >
-                <Link href={'/'}>
+                <Link href={`/detail/${post._id}`}>
                     <video 
                         ref={videoRef}
                         src={post.video.asset.url} loop 
-                        className='lg:w-[600px] h-[300px] md:h-[400px] lg:h-[530px] w-[200px] rounded-2xl cursor-pointer bg-gray-100 '
+                        className='w-[250px] h-[300px] sm:w-[350px] lg:w-[700px] lg:h-[530px] md:w-[500px] md:h-[400px] rounded-2xl cursor-pointer bg-gray-100 '
                     ></video>
                 </Link>
                 {isHover && (

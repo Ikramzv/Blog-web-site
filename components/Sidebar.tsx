@@ -3,13 +3,14 @@ import Link from "next/link"
 import { useState } from "react"
 import { AiFillHome, AiOutlineMenu } from 'react-icons/ai'
 import { ImCancelCircle } from 'react-icons/im'
+import useAuthStore from '../store/authStore'
 import Discover from "./Discover"
 import Footer from "./Footer"
 import SuggestedAccounts from "./SuggestedAccounts"
 
 const Sidebar = () => {
     const [showSidebar , setShowSidebar] = useState(true)
-    const userProfile = false
+    const { userProfile } = useAuthStore()
 
   return (
     <div>

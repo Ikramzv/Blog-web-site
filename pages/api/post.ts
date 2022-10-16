@@ -12,4 +12,9 @@ export default async function (
         const posts = await client.fetch(postsQuery)
         return res.status(200).json(posts)
     }
+    if(req.method === 'POST') {
+        const doc = req.body
+        const post = await client.create(doc)
+        return res.status(201).json(post)
+    }
 }
