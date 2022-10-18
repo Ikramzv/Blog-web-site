@@ -24,6 +24,7 @@ export type PostType = {
     topic: string
     userId: string
     video: MediaType
+    image: MediaType
     _createdAt: string
     _id: string
     _updatedAt: string

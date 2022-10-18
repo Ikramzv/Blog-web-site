@@ -35,6 +35,7 @@ const Navbar = () => {
                     src={Logo}
                     alt='Tiktik'
                     layout='responsive'
+                    priority
                 />
             </div>
         </Link>

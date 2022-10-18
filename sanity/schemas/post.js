@@ -17,6 +17,14 @@ export default {
       },
     },
     {
+      name: "image",
+      title: "Image",
+      type: "image",
+      options: {
+        hotspot: true,
+      },
+    },
+    {
       name: "userId",
       title: "UserId",
       type: "string",
@@ -30,12 +38,7 @@ export default {
       name: "likes",
       title: "Likes",
       type: "array",
-      of: [
-        {
-          type: "reference",
-          to: [{ type: "user" }],
-        },
-      ],
+      of: [{ type: "reference", to: [{ type: "user" }] }],
     },
     {
       name: "comments",

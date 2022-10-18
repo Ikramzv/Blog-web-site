@@ -14,7 +14,12 @@ export default async function (
     }
     if(req.method === 'POST') {
         const doc = req.body
-        const post = await client.create(doc)
+        const post = await client.transaction([
+            {
+                create: doc
+            }
+        ]).commit({ returnDocuments: true })
+        console.log('post' , post)
         return res.status(201).json(post)
     }
 }
