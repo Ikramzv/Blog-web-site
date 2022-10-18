@@ -1,4 +1,5 @@
 import { GoogleLogin } from '@react-oauth/google'
+import { motion } from 'framer-motion'
 import Link from "next/link"
 import { useState } from "react"
 import { AiFillHome, AiOutlineMenu } from 'react-icons/ai'
@@ -21,7 +22,11 @@ const Sidebar = () => {
             {showSidebar ? <ImCancelCircle /> : <AiOutlineMenu />}
         </div>
         {showSidebar && (
-            <div className="xl:w-400 w-20 flex flex-col justify-start
+            <motion.div 
+                initial={{x:-100,opacity:0}}
+                animate={{x:0,opacity:1, transitionDuration: '50ms'}}
+                exit={{x:-100,opacity:0}}
+                className="xl:w-400 w-20 flex flex-col justify-start
                 mb-10 border-r-2 border-gray-100 xl:border-r-0 p-3
             " >
                 <div className="xl:border-b-2 border-gray-200 xl:pb-4" >
@@ -48,7 +53,7 @@ const Sidebar = () => {
                 <Discover />
                 <SuggestedAccounts />
                 <Footer />
-            </div>
+            </motion.div>
         )}
     </div>
   )

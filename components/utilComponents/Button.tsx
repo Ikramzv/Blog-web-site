@@ -1,26 +1,19 @@
-import { useEffect } from 'react'
 import useAuthStore from "../../store/authStore"
 
 type Props = {
-    color?: string
-    colorVal?: string
+    classNames?: string
     text: string
     icon: React.ReactElement
     styles?: React.CSSProperties
-    handleClick: React.MouseEventHandler<HTMLButtonElement>
+    handleClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
-const Button = ({color , colorVal, text , icon, handleClick , styles}: Props) => {
+const Button = ({classNames, text , icon, handleClick , styles}: Props) => {
   const { userProfile } = useAuthStore()
-  useEffect(() => {
-    console.log(color,colorVal)
-  }, [])
   
   return (
     userProfile && (
-      <button className={`post_buttons border-${color}-${colorVal} text-${color}-${colorVal} hover:bg-${color}-${colorVal} 
-      ${color === 'black' && 'hover:bg-black border-black'} `} 
-        style={styles} onClick={handleClick} 
+      <button className={`post_buttons ${classNames}`} style={{...styles}} onClick={handleClick} 
       >
         <span className="hidden md:block" >{text}</span>
         {icon}

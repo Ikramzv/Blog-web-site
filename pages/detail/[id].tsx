@@ -1,5 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
+import Post from '../../components/Post'
 import { PostType } from '../../types/Post'
 import client from '../../utils/client'
 import { allPostsQuery, postDetailQuery } from '../../utils/queries'
@@ -10,10 +11,11 @@ interface DetailPropsType {
 
 const Detail = ({ post }: DetailPropsType) => {
     const router = useRouter()
-    console.log(post)
     if(router.isFallback) return <div>Not found</div>
   return (
-    <div>Caption: {post.caption}</div>
+    <>
+    <Post post={post} />
+    </>
   )
 }
 

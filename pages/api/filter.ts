@@ -22,7 +22,6 @@ export default async (
         }
         return initial
     } , [])
-    console.log("posts" , filter.join(" "))
     try {
         const query = filterPostsByQuery(filter.join(" "))
         const posts = await client.fetch(query)

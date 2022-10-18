@@ -30,7 +30,8 @@ export const allPostsQuery = () => {
         username,
         image
       },
-    }
+    },
+    _createdAt
   }`;
 
   return query;
@@ -68,7 +69,8 @@ export const filterPostsByQuery = (filter: string | string[]) => {
           username,
           image
         }
-      }
+      },
+      _createdAt
     }
   `
 
@@ -108,7 +110,8 @@ export const postDetailQuery = (postId: string | string[]) => {
           username,
           image
         }
-      }
+      },
+      _createdAt
     }
     `
   return query;
@@ -148,11 +151,12 @@ export const userCreatedPostsQuery = (userId: string | string[]) => {
       comment,
       _key,
       postedBy->{
-      _id,
-      username,
-      image
+        _id,
+        username,
+        image
+      },
     },
-    }
+    _createdAt
   }`;
 
   return query;
@@ -161,36 +165,36 @@ export const userCreatedPostsQuery = (userId: string | string[]) => {
 export const userLikedPostsQuery = (userId: string | string[]) => {
   const query = `*[_type == 'post' && '${userId}' in likes[]._ref ] | order(_createdAt desc) {
     _id,
-     caption,
-       video{
-        asset->{
-          _id,
-          url
-        }
-      },
-      image{
-        asset->{
-          _id,
-          url
-        }
-      },
-      userId,
+    caption,
+      video{
+      asset->{
+        _id,
+        url
+      }
+    },
+    image{
+      asset->{
+        _id,
+        url
+      }
+    },
+    userId,
     postedBy->{
       _id,
       username,
       image
     },
- likes,
-
+    likes,
     comments[]{
       comment,
       _key,
       postedBy->{
-      _id,
-      username,
-      image
+        _id,
+        username,
+        image
+      },
     },
-    }
+    _createdAt
   }`;
 
   return query;

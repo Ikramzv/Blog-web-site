@@ -8,6 +8,7 @@ import { IoMdAdd } from 'react-icons/io'
 import useAuthStore from '../store/authStore'
 import { createOrGetUser } from '../utils'
 import Logo from '../utils/tiktik-logo.png'
+import Button from './utilComponents/Button'
 
 const Navbar = () => {
   const { userProfile , addUser , logout } = useAuthStore()
@@ -42,31 +43,34 @@ const Navbar = () => {
         <form className='w-40 sm:w-44 md:w-64 lg:w-96 ' onSubmit={handleSubmit} >
           <input 
             type="text" 
-            className='w-full px-4 py-2 rounded outline-none border-2 border-gray-300 focus:border-gray-400 duration-300' 
+            className='w-full px-2 py-1 md:px-4 md:py-2 rounded outline-none border-2 border-gray-300 focus:border-gray-400 duration-300' 
             placeholder='Search by caption or topic' value={search} onChange={(e) => setSearch(e.target.value)} 
           />
         </form>
         <div>
           {userProfile ? (
             <div className='flex gap-10 mt-2 sm:m-0 sm:gap-5 md:gap-10 items-center'>
-              <Link href={'/upload'}>
-                <button className='border-2 px-2 md:px-4 text-base font-semibold flex items-center gap-2'>
-                  <IoMdAdd className='text-xl' />
-                  <span className='hidden md:block' >Upload</span>
-                </button>
+              <Link href={'/upload'} passHref={true} >
+                  <a>
+                    <Button 
+                      icon={<IoMdAdd className='text-xl' />} 
+                      text={'Upload'} 
+                      classNames={'border-black text-black hover:bg-black'}
+                    />
+                  </a>
               </Link>
               {userProfile.image && (
-                <Link href={'/'} >
-                  <>
-                    <Image
-                      src={userProfile.image}
-                      width={42}
-                      height={42}
-                      alt={'user image'}
-                      layout='fixed'
-                      className='rounded-full'
-                    />
-                  </>
+                <Link href={'/'} passHref={true} >
+                    <a>
+                      <Image
+                        src={userProfile.image}
+                        width={42}
+                        height={42}
+                        alt={'user image'}
+                        layout='fixed'
+                        className='rounded-full'
+                      />
+                    </a>
                 </Link>
               )}
               <button type="button" onClick={() => {

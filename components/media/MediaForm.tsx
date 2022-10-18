@@ -1,8 +1,10 @@
 import { SanityAssetDocument } from '@sanity/client'
+import { motion } from 'framer-motion'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import client from "../../utils/client"
 import MediaText from './MediaText'
+
 
 interface MediaFormProps {
     mediaAsset: SanityAssetDocument | null
@@ -57,7 +59,12 @@ const MediaForm = ({ mediaAsset , setMediaAsset , activePill, loading , setLoadi
                     {mediaAsset ? (
                         <div>
                             {activePill === 'video' ? (
-                                <video src={mediaAsset?.url} loop controls className="rounded-xl h-[450px] mt-16 bg-black"></video>
+                                <motion.video 
+                                    initial={{x:-100,opacity:0}}
+                                    animate={{x:0,opacity:1}}
+                                    exit={{y:-100,opacity:0}} 
+                                    src={mediaAsset?.url} loop controls className="rounded-xl h-[450px] mt-16 bg-black">
+                                </motion.video>
                             ) : (
                                 <Image 
                                     src={mediaAsset.url}

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { motion } from 'framer-motion';
 import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -44,11 +45,15 @@ const Home: NextPage<HomeProps> = ({posts}) => {
   } , [router.query])
   
   return (
-    <div className='flex flex-col gap-10 videos h-full' >
+    <motion.div
+        className='flex flex-col gap-10 videos h-full' 
+        initial={{y:-100 ,scale:0,opacity:0}}
+        animate={{y:0,opacity:1,scale:1,transitionDuration: '100ms'}}
+      >
       {currentPosts.length > 0 ? currentPosts.map((post) => (
         <Post post={post} key={post._id} />
       )) : <NoResults text={'There is no Posts'} />}
-    </div>
+    </motion.div>
   )
 }
 
