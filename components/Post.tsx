@@ -1,13 +1,10 @@
-import axios from 'axios'
 import { NextComponentType } from 'next'
 import { useEffect, useRef, useState } from 'react'
-import { MdEdit } from 'react-icons/md'
-import useAuthStore from '../store/authStore'
 import usePostsStore from '../store/postsStore'
 import { PostType } from '../types/Post'
+import CaptionOrComment from './PostDetailsComponents/CaptionOrComment'
 import PostActions from './PostDetailsComponents/PostActions'
 import PostedByDetails from './PostDetailsComponents/PostedByDetails'
-import Button from './utilComponents/Button'
 import ControlButtons from './utilComponents/ControlButtons'
 import ImageOrVideo from './utilComponents/ImageOrVideo'
 
@@ -20,8 +17,7 @@ const Post: NextComponentType<any,any,PostInterface> = ({ post }) => {
     const [playing , setPlaying] = useState(false)
     const [muted, setMuted] = useState(false) 
     const videoRef = useRef<HTMLVideoElement>(null)
-    const { setPosts, posts, setLiked } = usePostsStore()
-    const { userProfile } = useAuthStore()
+    const { posts } = usePostsStore()
 
     const onVideoPress = () => {
         if(playing) {
@@ -30,18 +26,6 @@ const Post: NextComponentType<any,any,PostInterface> = ({ post }) => {
         } else {
             videoRef.current.play()
             setPlaying(true)
-        }
-    }
-
-    const handleEdit = async() => {
-        const promp = prompt('Edit caption' , post.caption)
-        if(!promp) return
-        setPosts(posts.map(p => p._id === post._id ? {...p,caption: promp} : p))
-        try {
-            const { data } = await axios.patch('http://localhost:3000/api/update' , { type: 'edit', caption: promp, postId: post._id })
-            return data
-        } catch (error) {
-            Promise.reject(error)
         }
     }
 
@@ -70,16 +54,7 @@ const Post: NextComponentType<any,any,PostInterface> = ({ post }) => {
                 )}
                 <span className='absolute top-5 left-5 text-base text-gray-300 ' >{new Date(post._createdAt).toLocaleString()}</span>
             </div>
-            <div className='px-3 py-4 md:px-6 md:py-4 sm:ml-2 w-full sm:w-[300px] md:w-450 bg-gray-100 rounded-lg overflow-auto ' >
-                <Button 
-                    text='Edit'
-                    icon={<MdEdit className='text-lg' />}
-                    classNames={'border-black text-black hover:bg-black'}
-                    handleClick={handleEdit}
-                    styles={{ float: 'right',marginLeft: '6px' }}
-                />
-                <p className='text-[17px] text-gray-600 pb-2 break-words'>{post.caption}</p>
-            </div>
+            <CaptionOrComment post={post} />
         </div>
     </div>
   )

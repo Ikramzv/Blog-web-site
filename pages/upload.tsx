@@ -74,7 +74,7 @@ const Upload: NextPage = () => {
     }
 
   return (
-    <div className="flex h-full w-full absolute left-0 top-[60px] mb-10 pt-10 lg:pt-20 bg-[#f8f8f8] justify-center  ">
+    <div className="flex min-h-screen w-full absolute left-0 top-[60px] pt-10 lg:pt-20 bg-[#f8f8f8] justify-center ">
         {savingPost ? (
             <div className='h-full w-full grid place-items-center' >
                 <p className='text-xl text-green-700 text-center' >Saving the post ...</p>

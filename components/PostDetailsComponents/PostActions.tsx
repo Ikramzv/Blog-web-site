@@ -11,7 +11,7 @@ type Props = {
     post: PostType
 }
 
-function PostActions({post }: Props) {
+function PostActions({post}: Props) {
     const { userProfile } = useAuthStore()
     const [likes , setLikes] = useState(post.likes.some((like) => like._ref === userProfile?._id))
     const { setPosts, posts, setLiked } = usePostsStore()
@@ -31,17 +31,19 @@ function PostActions({post }: Props) {
     const handleComment = async() => {
         const promp = prompt('Write comment here')
         if(!promp) return
-        const commentData = {
+        const sanityCommentData = {
             _type: 'comment',
+            _key: crypto.randomUUID(),
             comment: promp,
             postedBy: {
-                username: userProfile?.username,
-                image: { asset: { url: userProfile?.image }}
+                _type: 'reference',
+                _ref: userProfile?._id
             }
         }
+        const commentData = {...sanityCommentData , postedBy: { username: userProfile?.username , image: userProfile?.image }}
         setPosts(posts.map((p) => p._id === post._id ? {...p, comments: [...p.comments,commentData]} : p))
         try {
-            const { data } = await axios.patch('http://localhost:3000/api/update' , { type: 'comment', commentData, postId: post._id })
+            const { data } = await axios.patch('http://localhost:3000/api/update' , { type: 'comment', commentData:sanityCommentData, postId: post._id })
             return data
         } catch (error) {
             Promise.reject(error)

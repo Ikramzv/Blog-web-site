@@ -1,5 +1,7 @@
 type Comments = {
     comment: string
+    _key: string
+    postedBy: PostedBy
 }
 
 type AssetType = {
