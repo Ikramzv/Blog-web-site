@@ -1,5 +1,4 @@
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import { AnimatePresence } from 'framer-motion';
 import { AppProps } from 'next/app';
 import { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
@@ -14,7 +13,6 @@ function MyAp({ Component, pageProps }: AppProps) {
   if(isSSR) return null
   return (
     <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_CLIENT_ID} >
-      <AnimatePresence>
         <div>
           <Navbar />
           <div className='flex gap-6 md:gap-20' >
@@ -26,7 +24,6 @@ function MyAp({ Component, pageProps }: AppProps) {
             </div>
           </div>
         </div>
-      </AnimatePresence>
     </GoogleOAuthProvider>
   );
 }

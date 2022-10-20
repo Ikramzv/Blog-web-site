@@ -74,59 +74,61 @@ const Upload: NextPage = () => {
     }
 
   return (
-    <div className="flex min-h-screen w-full absolute left-0 top-[60px] pt-10 lg:pt-20 bg-[#f8f8f8] justify-center ">
-        {savingPost ? (
-            <div className='h-full w-full grid place-items-center' >
-                <p className='text-xl text-green-700 text-center' >Saving the post ...</p>
-            </div>
-        ) : (
-            <div className="bg-white rounded-lg xl:min-h-[90vh] flex gap-6 flex-wrap justify-center items-center p-14 pt-6 w-[80%] ">
-                <div className='flex flex-col gap-2 pb-5'>
-                    <div className='flex items-center gap-5'>
-                        <button className={`pill ${activePill === 'video' && 'border-blue-600'}`} onClick={() => setActivePill('video')} >
-                            Post a Video
-                        </button>
-                        <button className={`pill ${activePill === 'image' && 'border-blue-600'}`} onClick={() => setActivePill('image')} >
-                            Post an Image
-                        </button>
-                    </div>
-                    <MediaForm mediaAsset={mediaAsset} setMediaAsset={setMediaAsset} activePill={activePill} loading={loading} setLoading={setLoading} />
+    <div className="w-full absolute left-0">
+        <div className='flex min-h-screen w-full md:pt-10 lg:pt-20 bg-[#f8f8f8] justify-center absolute left-0 -top-4'>
+            {savingPost ? (
+                <div className='h-full w-full grid place-items-center'>
+                    <p className='text-xl text-green-700 text-center' >Saving the post ...</p>
                 </div>
-                <div className='flex flex-col gap-3 pb-10' >
-                        <label className='text-base font-medium'>Caption</label>
-                        <input type="text" name='caption' value={form.caption} onChange={handleChange} className='rounded outline-none text-base border-2 border-gray-200 p-2' />
-                        
-                        <label className='text-base font-medium'>Choose a Catergory</label>
-                        <select 
-                            name="category" 
-                            className='outline-none border-2 border-gray-200 text-base capitalize lg:p-4 p-2 rounded cursor-pointer' 
-                            onChange={handleChange}
-                        >
-                            {topics.map((topic) => (
-                                <option  
-                                    className='outline-none capitalize bg-white text-gray-700 text-base p-2 hover:bg-slate-300 duration-300' 
-                                    key={topic.name} 
-                                    value={topic.name}
-                                >
-                                    {topic.name}
-                                </option>
-                            ))}
-                        </select>
-                        <div className='flex gap-6 mt-10'>
-                            <button type='button' onClick={clearUploaded} 
-                                className='border-gray-300 border-2 btn_upd active:scale-95 duration-300' 
-                            >
-                                Discard
+            ) : (
+                <div className="bg-white rounded-lg xl:min-h-[90vh] flex gap-6 flex-wrap justify-center items-center p-14 pt-6 w-[80%] ">
+                    <div className='flex flex-col gap-2 pb-5'>
+                        <div className='flex items-center justify-center gap-5 mb-3 sm:mb-4 '>
+                            <button className={`pill ${activePill === 'video' && 'border-blue-600'}`} onClick={() => setActivePill('video')} >
+                                Video
                             </button>
-                            <button type='button' onClick={handlePost} 
-                                className='bg-[#f51997] text-white btn_upd active:scale-95 duration-300' 
-                            >
-                                Post
+                            <button className={`pill ${activePill === 'image' && 'border-blue-600'}`} onClick={() => setActivePill('image')} >
+                                Image
                             </button>
                         </div>
-                </div>
+                        <MediaForm mediaAsset={mediaAsset} setMediaAsset={setMediaAsset} activePill={activePill} loading={loading} setLoading={setLoading} />
+                    </div>
+                    <div className='flex flex-col gap-3 pb-10' >
+                            <label className='text-base font-medium'>Caption</label>
+                            <input type="text" name='caption' value={form.caption} onChange={handleChange} className='rounded outline-none text-base border-2 border-gray-200 p-2' />
+                            
+                            <label className='text-base font-medium'>Choose a Catergory</label>
+                            <select 
+                                name="category" 
+                                className='outline-none border-2 border-gray-200 text-base capitalize lg:p-4 p-2 rounded cursor-pointer' 
+                                onChange={handleChange}
+                            >
+                                {topics.map((topic) => (
+                                    <option  
+                                        className='outline-none capitalize bg-white text-gray-700 text-base p-2 hover:bg-slate-300 duration-300' 
+                                        key={topic.name} 
+                                        value={topic.name}
+                                    >
+                                        {topic.name}
+                                    </option>
+                                ))}
+                            </select>
+                            <div className='flex gap-6 mt-10'>
+                                <button type='button' onClick={clearUploaded} 
+                                    className='border-gray-300 border-2 btn_upd active:scale-95 duration-300' 
+                                >
+                                    Discard
+                                </button>
+                                <button type='button' onClick={handlePost} 
+                                    className='bg-[#f51997] text-white btn_upd active:scale-95 duration-300' 
+                                >
+                                    Post
+                                </button>
+                            </div>
+                    </div>
+            </div>
+            )}
         </div>
-        )}
     </div>
   )
 }

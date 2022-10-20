@@ -46,7 +46,7 @@ const MediaForm = ({ mediaAsset , setMediaAsset , activePill, loading , setLoadi
   return (
     <div>
         <div>
-            <p className="text-2xl font-bold">Upload {activePill === 'video' ? 'Video' : 'Image'}</p>
+            <p className="text-lg sm:text-xl md:text-2xl font-bold">Upload {activePill === 'video' ? 'Video' : 'Image'}</p>
             <p className="text-base text-gray-400 mt-1" >Post a {activePill} to your account</p>
         </div>
         <div className="border-dashed rounded-xl border-4 border-gray-200 flex flex-col justify-center items-center outline-none mt-10 
@@ -60,6 +60,7 @@ const MediaForm = ({ mediaAsset , setMediaAsset , activePill, loading , setLoadi
                         <div>
                             {activePill === 'video' ? (
                                 <motion.video 
+                                    key={'video_anm'}
                                     initial={{x:-100,opacity:0}}
                                     animate={{x:0,opacity:1}}
                                     exit={{y:-100,opacity:0}} 

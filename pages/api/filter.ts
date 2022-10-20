@@ -9,7 +9,7 @@ export default async (
         let query: string;
         if(key === 'search') {
             initial = initial.filter(str => !str.includes('topic') || !str.includes('caption'))
-            query = `topic match "${req.query[key]}*" || caption match "${req.query[key]}*"`
+            query = `topic match "${req.query[key]}*" || caption match "${req.query[key]}*" || postedBy->.username match "${req.query[key]}"`
             initial.push(query)
         } else {
             if(initial.length > 0) {
@@ -25,6 +25,7 @@ export default async (
     try {
         const query = filterPostsByQuery(filter.join(" "))
         const posts = await client.fetch(query)
+        console.log('posts' , posts)
         return res.status(200).json(posts)
     } catch (error) {
         return res.status(400).send(error.message)

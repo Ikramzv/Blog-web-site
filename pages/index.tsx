@@ -23,6 +23,7 @@ const Home: NextPage<HomeProps> = ({posts}) => {
 
   useEffect(() => {
     setCurrentPosts(storedPosts)
+    console.log('stored post changed' , posts)
   } , [storedPosts])
   
   useEffect(() => {
@@ -46,6 +47,7 @@ const Home: NextPage<HomeProps> = ({posts}) => {
   
   return (
     <motion.div
+        key={'initial_feed_displaying'}
         className='flex flex-col gap-10 videos h-full' 
         initial={{y:-100 ,scale:0,opacity:0}}
         animate={{y:0,opacity:1,scale:1,transitionDuration: '100ms'}}

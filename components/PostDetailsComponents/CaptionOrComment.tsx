@@ -38,27 +38,31 @@ const CaptionOrComment = ({post}: Props) => {
         }
     }
   return (
-    <div className={`px-3 py-4 md:px-6 md:py-4 ${showComments && 'py-0 md:py-0'} sm:ml-2 w-full sm:w-[300px] md:w-450 max-h-[200px] md:max-h-[380px] overflow-y-auto bg-gray-100 rounded-lg relative`} >
-        {showComments && post.comments.length === 0 && (
-            <div className='grid h-full w-full place-items-center'>
-                <p className='text-lg'>No users share comments already</p>
-            </div>
-        )}
-        { showComments ? (
+    <div 
+        className={`flex flex-col px-3 py-4 md:px-6 bg-gray-200 leading-6 md:leading-7 md:py-4 ${showComments && 'py-0 md:py-0'} sm:ml-2 w-full max-h-[200px] sm:w-[300px] sm:max-h-[280px]
+        md:w-450 md:max-h-[380px]bg-gray-100 rounded-lg relative`} 
+    >
+        {showComments ? (
             <motion.div 
                 key={'comments'}
                 initial={{y:100}}
                 animate={{y: 0}}
                 exit={{y: -100}}
                 className='flex flex-col h-full bg-white -mx-3 md:-mx-6 
-                px-2 py-1 border-2 overflow-y-auto border-gray-300 rounded-md' 
+                px-2 py-1 border-2 overflow-y-auto border-gray-300 rounded-md flex-1 pb-14' 
             >
-                {post.comments.map(c => (
-                    <div key={c._key} className='border-b py-2 border-gray-400'>
-                        <p className='float-left text-base font-bold mr-2' >{c.postedBy?.username}</p>
-                        <p className='text-sm text-gray-700'>{c.comment}</p>
+                {post.comments.length === 0 ? (
+                    <div>
+                        <p className='text-lg text-gray-500'>No users shared comment yet</p>
                     </div>
-                ))}
+                ) : (
+                    post.comments.map(c => (
+                        <div key={c._key} className='border-b py-2 border-gray-400'>
+                            <p className='float-left text-base font-bold mr-2'>{c.postedBy?.username}</p>
+                            <p className='text-sm text-gray-700' style={{wordBreak:'break-all',wordWrap:'break-word'}}>{c.comment}</p>
+                        </div>
+                    ))
+                )}
             </motion.div>
         ) : (
             
@@ -67,29 +71,33 @@ const CaptionOrComment = ({post}: Props) => {
                     initial={{y:-100}}
                     animate={{y: 0}}
                     exit={{y: 100}}
+                    className='h-full overflow-y-auto flex-1 pb-14'
                 >
                     {userProfile?._id === post.postedBy._id && (
                         <Button 
                             text='Edit'
                             icon={<MdEdit className='text-lg' />}
-                            classNames={'border-black text-black hover:bg-black'}
+                            classNames={'border-black text-black hover:bg-black float-right ml-2 '}
                             handleClick={handleEdit}
-                            styles={{ float: 'right',marginLeft: '6px' }}
                         />
                     )}
                     <p className='text-[17px] text-gray-600 pb-2 break-words'>{post.caption}</p>
                 </motion.div>
-        ) }
-        <motion.button 
-            whileTap={{scale:0.95}}
-            variants={variants}
-            initial={showComments ? 'hidden' : 'show'}
-            animate={showComments ? 'show' : 'hidden'}
-            className='rounded-full border-2 border-blue-500 p-1 absolute bottom-10 right-1' 
-            onClick={() => setShowComments(!showComments)}
-        >
-            <HiArrowUp className='text-xl text-blue-500' />
-        </motion.button>
+        )}
+        <div className='flex absolute bottom-0 left-0 right-0 h-12 rounded-b-lg p-2 border-2 border-t-0 border-gray-200 bg-gray-800' >
+            <p className='text-white text-sm' >{post.comments.length} comments</p>
+            <motion.button 
+                key={'show_comments_button'}
+                whileTap={{scale:0.95}}
+                variants={variants}
+                initial={showComments ? 'hidden' : 'show'}
+                animate={showComments ? 'show' : 'hidden'}
+                className='ml-auto rounded-full border-2 border-blue-500 p-1' 
+                onClick={() => setShowComments(!showComments)}
+            >
+                <HiArrowUp className='text-xl text-blue-500' />
+            </motion.button>
+        </div>
     </div>
   )
 }

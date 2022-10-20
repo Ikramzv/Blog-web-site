@@ -1,7 +1,8 @@
 import { NextComponentType } from 'next'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import usePostsStore from '../store/postsStore'
 import { PostType } from '../types/Post'
+import { convertDateToString } from '../utils/index'
 import CaptionOrComment from './PostDetailsComponents/CaptionOrComment'
 import PostActions from './PostDetailsComponents/PostActions'
 import PostedByDetails from './PostDetailsComponents/PostedByDetails'
@@ -15,7 +16,7 @@ interface PostInterface {
 const Post: NextComponentType<any,any,PostInterface> = ({ post }) => {
     const [isHover , setIsHover] = useState(false)
     const [playing , setPlaying] = useState(false)
-    const [muted, setMuted] = useState(false) 
+    const [muted, setMuted] = useState(false)
     const videoRef = useRef<HTMLVideoElement>(null)
     const { posts } = usePostsStore()
 
@@ -29,9 +30,9 @@ const Post: NextComponentType<any,any,PostInterface> = ({ post }) => {
         }
     }
 
-    useEffect(() => {
-       console.log(posts)    
-    }, [posts])    
+    // useEffect(() => {
+    //    console.log(posts)    
+    // }, [posts])    
 
   return (
     <div className='flex flex-col border-b-2 border-gray-200 pb-6'>
@@ -42,7 +43,7 @@ const Post: NextComponentType<any,any,PostInterface> = ({ post }) => {
             </div>
         </div>
         <div className='lg:ml-20 flex flex-col sm:flex-row relative'>
-            <div className='rounded-3xl float-left' onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)} >
+            <div className='rounded-3xl float-left ' onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)} >
                 <ImageOrVideo post={post} videoRef={videoRef} />
                 {isHover && post.video && (
                     <div 
@@ -52,7 +53,7 @@ const Post: NextComponentType<any,any,PostInterface> = ({ post }) => {
                         <ControlButtons muted={muted} onVideoPress={onVideoPress} playing={playing} setMuted={setMuted} videoRef={videoRef} />
                     </div>
                 )}
-                <span className='absolute top-5 left-5 text-base text-gray-300 ' >{new Date(post._createdAt).toLocaleString()}</span>
+                <span className='bg-black p-1 rounded-lg absolute top-0 left-0 text-xs text-gray-200' >{convertDateToString(post._createdAt)}</span>
             </div>
             <CaptionOrComment post={post} />
         </div>

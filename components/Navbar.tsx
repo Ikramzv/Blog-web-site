@@ -28,7 +28,7 @@ const Navbar = () => {
   }
 
   return (
-    <div className='w-full flex justify-between items-center border-b-2 py-2 px-4 flex-wrap' >
+    <div className='w-full flex justify-between items-center border-b-2 py-2 px-4 flex-wrap z-50 ' >
         <Link href={'/'} >
             <div className='w-[100px] md:w-[130px]' >
                 <Image 
@@ -67,19 +67,22 @@ const Navbar = () => {
                         width={42}
                         height={42}
                         alt={'user image'}
-                        layout='fixed'
-                        className='rounded-full'
+                        layout='intrinsic'
+                        className='rounded-full  '
                       />
                     </a>
                 </Link>
               )}
-              <button type="button" onClick={() => {
-                googleLogout()
-                logout()
-                router.replace('/')
-              }} className='px-2' >
-                <AiOutlineLogout color='red' fontSize={24} />
-              </button>
+              <Button  
+                  handleClick={() => {
+                    googleLogout()
+                    logout()
+                    router.replace('/')
+                  }} 
+                  classNames='px-2 border-red-500 text-red-500 hover:bg-red-500 ' 
+                  icon={<AiOutlineLogout className='text-xl' />}
+                  text={'Log out'}
+                />
             </div>
           ) : (
             <GoogleLogin 

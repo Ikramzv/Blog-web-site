@@ -25,7 +25,7 @@
 }
 
 .pill {
-    @apply border-b-2 duration-300 py-3 px-4 hover:bg-blue-100 rounded text-base font-semibold
+    @apply border-b-2 duration-300 py-1 px-2 sm:py-3 sm:px-4 hover:bg-blue-100 rounded text-base font-semibold
 }
 
 .btn_upd {
@@ -33,5 +33,5 @@
 }
 
 .post_buttons {
-    @apply px-3 py-2 flex items-center justify-center gap-2 rounded-lg duration-300 hover:text-white border-2 cursor-pointer
+    @apply px-2 py-1 sm:px-3 sm:py-2 flex items-center justify-center gap-2 rounded-lg duration-300 hover:text-white border-2 cursor-pointer
 }
