@@ -17,7 +17,6 @@ function PostActions({post}: Props) {
     const { setPosts, posts, setLiked } = usePostsStore()
 
     const handleLike = async() => {
-        console.log('lke')
         setLiked(userProfile?._id , post._id)
         try {
             const { data } = await axios.patch('http://localhost:3000/api/update', 

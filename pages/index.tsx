@@ -7,6 +7,7 @@ import NoResults from '../components/NoResults';
 import Post from '../components/Post';
 import usePostsStore from '../store/postsStore';
 import { PostType } from '../types/Post';
+import { findChanged } from '../utils';
 
 interface HomeProps {
   posts: PostType[]
@@ -14,34 +15,41 @@ interface HomeProps {
 
 const Home: NextPage<HomeProps> = ({posts}) => {
   const [currentPosts , setCurrentPosts] = useState(posts)
+  const [lastFilteredPosts, setLastFilteredPosts] = useState<PostType[]>([])
   const router = useRouter()
   const { posts: storedPosts, setPosts } = usePostsStore()
 
+  const filterPostsByQuery = async() => {
+    if(Object.keys(router.query).length === 0) {
+      setCurrentPosts(posts)
+      setPosts(posts)
+      return
+    }
+    try {
+      const searchParams = router.asPath.split('?')[1]
+      const { data } = await axios.get(`http://localhost:3000/api/filter?${searchParams}`)
+      setCurrentPosts(data)
+      setLastFilteredPosts(data)
+      return data
+    } catch (error) {
+      Promise.reject(error)
+    }
+  }
+  
   useEffect(() => {
     setPosts(posts)
   } , [])
 
   useEffect(() => {
-    setCurrentPosts(storedPosts)
-    console.log('stored post changed' , posts)
+    if(Object.keys(router.query).length > 0) {
+      const findChangedPosts = findChanged(lastFilteredPosts,storedPosts)
+      setCurrentPosts(findChangedPosts)
+    } else {
+      setCurrentPosts(storedPosts)
+    }
   } , [storedPosts])
   
   useEffect(() => {
-    const filterPostsByQuery = async() => {
-      if(Object.keys(router.query).length === 0) {
-        setCurrentPosts(posts)
-        setPosts(posts)
-        return
-      }
-      try {
-        const searchParams = router.asPath.split('?')[1]
-        const { data } = await axios.get(`http://localhost:3000/api/filter?${searchParams}`)
-        setCurrentPosts(data)
-        return data
-      } catch (error) {
-        Promise.reject(error)
-      }
-    }
     filterPostsByQuery()
   } , [router.query])
   

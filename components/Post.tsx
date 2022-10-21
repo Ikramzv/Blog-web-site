@@ -32,7 +32,7 @@ const Post: NextComponentType<any,any,PostInterface> = ({ post }) => {
 
     // useEffect(() => {
     //    console.log(posts)    
-    // }, [posts])    
+    // }, [posts])
 
   return (
     <div className='flex flex-col border-b-2 border-gray-200 pb-6'>

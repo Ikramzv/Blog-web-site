@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { GoVerified } from 'react-icons/go'
+import { IoMdHeart, IoMdHeartEmpty } from 'react-icons/io'
 import useAuthStore from '../../store/authStore'
 import { PostType } from '../../types/Post'
 import { convertLikesToText } from '../../utils'
@@ -9,8 +10,17 @@ type Props = {
     post: PostType
 }
 
-function PostedByDetails({post}: Props) {
+const Like = ({post}: Props) => {
     const { userProfile } = useAuthStore()
+    return (
+        <p className='text-red-700 text-sm inline-flex items-center gap-1'>
+            {post.likes.some(p => p._ref === userProfile._id) ? <IoMdHeart /> : <IoMdHeartEmpty />}
+            {convertLikesToText(post.likes , userProfile)} 
+        </p>
+    )
+}
+
+const PostedByDetails = ({post}: Props) => {
   return (
     <div className='flex items-center gap-3 p-2' >
         <div className='md:w-16 md:h-16 w-10 h-10 ' >
@@ -39,7 +49,7 @@ function PostedByDetails({post}: Props) {
                     </p>
                 </div>
             </Link>
-            <p className='text-red-700 text-sm'>{convertLikesToText(post.likes , userProfile)}</p>
+            <Like post={post} />
         </div>
     </div>
   )
