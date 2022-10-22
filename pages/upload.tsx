@@ -1,5 +1,6 @@
 import { SanityAssetDocument } from '@sanity/client'
 import axios from 'axios'
+import { motion } from 'framer-motion'
 import { NextPage } from "next"
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
@@ -74,14 +75,17 @@ const Upload: NextPage = () => {
     }
 
   return (
-    <div className="w-full absolute left-0">
-        <div className='flex min-h-screen w-full md:pt-10 lg:pt-20 bg-[#f8f8f8] justify-center absolute left-0 -top-4'>
+    <div className="w-full absolute left-0 z-50">
+        <div className='flex min-h-[90vh] pb-10 w-full md:pt-10 lg:pt-14 bg-[#f8f8f8] justify-center absolute left-0 -top-4 overflow-auto '>
             {savingPost ? (
-                <div className='h-full w-full grid place-items-center'>
-                    <p className='text-xl text-green-700 text-center' >Saving the post ...</p>
+                <div className='w-full flex items-center justify-center'>
+                    <motion.p 
+                        className='text-xl text-green-700 text-center overflow-hidden text-clip' >
+                        Saving the post ...
+                    </motion.p>
                 </div>
             ) : (
-                <div className="bg-white rounded-lg xl:min-h-[90vh] flex gap-6 flex-wrap justify-center items-center p-14 pt-6 w-[80%] ">
+                <div className="bg-white rounded-lg min-h-[100vh] flex gap-6 flex-wrap justify-center items-center p-14 pt-6 w-[80%] ">
                     <div className='flex flex-col gap-2 pb-5'>
                         <div className='flex items-center justify-center gap-5 mb-3 sm:mb-4 '>
                             <button className={`pill ${activePill === 'video' && 'border-blue-600'}`} onClick={() => setActivePill('video')} >
