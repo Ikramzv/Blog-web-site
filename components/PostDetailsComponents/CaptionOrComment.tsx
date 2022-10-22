@@ -6,6 +6,7 @@ import { MdEdit } from 'react-icons/md'
 import useAuthStore from '../../store/authStore'
 import usePostsStore from '../../store/postsStore'
 import { PostType } from '../../types/Post'
+import { convertDateToString } from '../../utils'
 import Button from '../utilComponents/Button'
 
 type Props = {
@@ -29,7 +30,7 @@ const CaptionOrComment = ({post}: Props) => {
     const handleEdit = async() => {
         const promp = prompt('Edit caption' , post.caption)
         if(!promp) return
-        setPosts(posts.map(p => p._id === post._id ? {...p,caption: promp} : p))
+        setPosts(posts.map(p => p._id === post._id ? {...p,caption: promp,_updatedAt: new Date()} : p))
         try {
             const { data } = await axios.patch('http://localhost:3000/api/update' , { type: 'edit', caption: promp, postId: post._id })
             return data
@@ -58,8 +59,8 @@ const CaptionOrComment = ({post}: Props) => {
                 ) : (
                     post.comments.map(c => (
                         <div key={c._key} className='border-b py-2 border-gray-400'>
-                            <p className='float-left text-base font-bold mr-2'>{c.postedBy?.username}</p>
-                            <p className='text-sm text-gray-700' style={{wordBreak:'break-all',wordWrap:'break-word'}}>{c.comment}</p>
+                            <span className='text-base font-bold mr-2'>{c.postedBy?.username}</span>
+                            <p className='text-sm text-gray-700 inline' style={{wordBreak:'break-all',wordWrap:'break-word'}}>{c.comment}</p>
                         </div>
                     ))
                 )}
@@ -72,15 +73,20 @@ const CaptionOrComment = ({post}: Props) => {
                     animate={{y: 0}}
                     exit={{y: 100}}
                     className='h-full overflow-y-auto flex-1 pb-14'
-                >
-                    {userProfile?._id === post.postedBy._id && (
-                        <Button 
-                            text='Edit'
-                            icon={<MdEdit className='text-lg' />}
-                            classNames={'border-black text-black hover:bg-black float-right ml-2 '}
-                            handleClick={handleEdit}
-                        />
-                    )}
+                >   
+                    <div className='float-right flex items-center gap-2'>
+                        <span className='bg-white h-max p-2 rounded-lg text-xs text-gray-700 inline-flex items-center ml-1'>
+                            {convertDateToString(post._createdAt)}
+                        </span>
+                        {userProfile?._id === post.postedBy._id && (
+                            <Button 
+                                text='Edit'
+                                icon={<MdEdit className='text-lg' />}
+                                classNames={'border-black text-black hover:bg-black'}
+                                handleClick={handleEdit}
+                            />
+                        )}
+                    </div>
                     <p className='text-[17px] text-gray-600 pb-2 break-words'>{post.caption}</p>
                 </motion.div>
         )}

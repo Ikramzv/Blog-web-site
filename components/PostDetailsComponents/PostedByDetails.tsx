@@ -14,8 +14,8 @@ const Like = ({post}: Props) => {
     const { userProfile } = useAuthStore()
     return (
         <p className='text-red-700 text-sm inline-flex items-center gap-1'>
-            {post.likes.some(p => p._ref === userProfile._id) ? <IoMdHeart /> : <IoMdHeartEmpty />}
-            {convertLikesToText(post.likes , userProfile)} 
+            {post.likes.some(p => p._ref === userProfile?._id) ? <IoMdHeart /> : <IoMdHeartEmpty />}
+            {convertLikesToText(post.likes , userProfile)}
         </p>
     )
 }
@@ -24,8 +24,8 @@ const PostedByDetails = ({post}: Props) => {
   return (
     <div className='flex items-center gap-3 p-2' >
         <div className='md:w-16 md:h-16 w-10 h-10 ' >
-            <Link href={'/profile'}>
-                <>
+            <Link href={`/profile/${post.userId}`} passHref={true} >
+                <a>
                     <Image 
                         width={62}
                         height={62}
@@ -34,20 +34,22 @@ const PostedByDetails = ({post}: Props) => {
                         alt='Profile Photo'
                         layout='responsive'
                     />
-                </>
+                </a>
             </Link>
         </div>
         <div className='flex flex-col gap-4' >
-            <Link href={'/profile'}>
-                <div className='flex items-center gap-2 md:text-base font-bold text-primary' >
-                    <p className='flex items-center gap-2' >
-                        {post.postedBy.username}
-                        <GoVerified className='text-blue-400 text-base' />
-                    </p>
-                    <p className='capitalize font-medium text-xs text-gray-500 hidden md:block' >
-                        {post.postedBy.username}
-                    </p>
-                </div>
+            <Link href={`/profile/${post.userId}`} passHref={true} >
+                <a>
+                    <div className='flex items-center gap-2 md:text-base font-bold text-primary' >
+                        <p className='flex items-center gap-2' >
+                            {post.postedBy.username}
+                            <GoVerified className='text-blue-400 text-base' />
+                        </p>
+                        <p className='capitalize font-medium text-xs text-gray-500 hidden md:block' >
+                            {post.postedBy.username}
+                        </p>
+                    </div>
+                </a>
             </Link>
             <Like post={post} />
         </div>
