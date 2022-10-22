@@ -6,18 +6,21 @@ import { useEffect, useState } from 'react';
 import NoResults from '../components/NoResults';
 import Post from '../components/Post';
 import usePostsStore from '../store/postsStore';
-import { PostType } from '../types/Post';
+import { useSuggestedUsersStore } from '../store/suggestedUsers';
+import { PostedBy, PostType } from '../types/Post';
 import { findChanged } from '../utils';
 
 interface HomeProps {
   posts: PostType[]
+  users: PostedBy[]
 }
 
-const Home: NextPage<HomeProps> = ({posts}) => {
+const Home: NextPage<HomeProps> = ({ posts , users }) => {
   const [currentPosts , setCurrentPosts] = useState(posts)
   const [lastFilteredPosts, setLastFilteredPosts] = useState<PostType[]>([])
   const router = useRouter()
   const { posts: storedPosts, setPosts } = usePostsStore()
+  const { setSuggestedUsers } = useSuggestedUsersStore()
 
   const filterPostsByQuery = async() => {
     if(Object.keys(router.query).length === 0) {
@@ -38,6 +41,7 @@ const Home: NextPage<HomeProps> = ({posts}) => {
   
   useEffect(() => {
     setPosts(posts)
+    setSuggestedUsers(users)
   } , [])
 
   useEffect(() => {
@@ -56,7 +60,7 @@ const Home: NextPage<HomeProps> = ({posts}) => {
   return (
     <motion.div
         key={'initial_feed_displaying'}
-        className='flex flex-col gap-10 videos h-full' 
+        className='flex flex-col mb-10 gap-10 videos h-full overflow-auto' 
         initial={{y:-100 ,scale:0,opacity:0}}
         animate={{y:0,opacity:1,scale:1,transitionDuration: '100ms'}}
       >
@@ -68,10 +72,12 @@ const Home: NextPage<HomeProps> = ({posts}) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async({  }) => {
-  const { data } = await axios.get('http://localhost:3000/api/post')
+  const { data: posts } = await axios.get('http://localhost:3000/api/post')
+  const { data: users } = await axios.get('http://localhost:3000/api/suggested_accounts')
   return {
     props: {
-      posts: data
+      posts,
+      users
     },
   }
 }
