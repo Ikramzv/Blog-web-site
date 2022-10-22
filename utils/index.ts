@@ -29,16 +29,16 @@ export const convertLikesToText = (likes: {_ref: string}[] , currentUser: Posted
 }
 
 export const convertDateToString = (date: string): string => {
-    const currentDate = new Date().getTime()
+    const currentDate = new Date()
     const postDate = new Date(date)
-    const since = Math.floor((currentDate - postDate.getTime()) / 1000)
-    if(since < 0) return postDate.toLocaleString()
-    if(since < 60) return `${since} seconds ago`
-    if(since < 60 * 60) return `${Math.floor(since / 60)} minute${since < 120 ? '' : 's'} ago`
-    if(since < 60 * 60 * 24) return `${Math.floor(since / 60 / 60)} hour${since < 60 * 60 * 2 ? '' : 's'} ago`
-    if(since < 60 * 60 * 24 * 7) return `${Math.floor(since / 60 / 60 / 24)} day${since < 60 * 60 * 24 * 2 ? '' : 's'} ago`
-    if(since < 60 * 60 * 24 * 30) return `${Math.floor(since / 60 / 60 / 24 / 7)} week${since < 60 * 60 * 24 * 7 * 2 ? '' : 's'} ago`
-    if(since < 60 * 60 * 24 * 30 * 12) return `${Math.floor(since / 60 / 60 / 24 / 30)} month${since < 60 * 60 * 24 * 30 * 2 ? '' : 's'} ago`
+    const since = Math.floor((currentDate.getTime() - postDate.getTime()) / 1000)
+    if(since < 0) return postDate.toLocaleDateString()
+    if(since < 60) return `${since}s ago`
+    if(since < 60 * 60) return `${Math.floor(since / 60)}m ago`
+    if(since < 60 * 60 * 24) return `${Math.floor(since / 60 / 60)}h ago`
+    if(since < 60 * 60 * 24 * 7) return `${Math.floor(since / 60 / 60 / 24)}d ago`
+    if(since < 60 * 60 * 24 * 30) return `${Math.floor(since / 60 / 60 / 24 / 7)}w ago`
+    if(since < 60 * 60 * 24 * 30 * 12) return `${Math.floor(since / 60 / 60 / 24 / 30)}m ago`
     
     return postDate.toLocaleString()
 }
