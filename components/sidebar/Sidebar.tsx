@@ -1,5 +1,6 @@
-import { AnimatePresence, motion, usePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import Link from "next/link"
+import { useRouter } from 'next/router'
 import { useEffect, useState } from "react"
 import { AiFillHome } from 'react-icons/ai'
 import Footer from "../Footer"
@@ -15,16 +16,22 @@ const sidebarAnimation = {
 
 const Sidebar = () => {
     const [showSidebar , setShowSidebar] = useState(true)
-    const [isPresent , safeToRemove] = usePresence()
+    const router = useRouter()
+
+    window.addEventListener('resize', () => {
+        if(window.innerWidth > 1280) setShowSidebar(true)
+        else setShowSidebar(false)
+    })
 
     useEffect(() => {
-        if(!isPresent) {
-            console.log(isPresent)
-            setTimeout(safeToRemove , 1000)
-        }
-    } , [isPresent])
+      if(window.innerWidth < 1280 && Object.keys(router.query).length > 0) {
+        setShowSidebar(false)
+      }
+    }, [Object.keys(router.query).length])
+    
+    
   return (
-    <div className='fixed left-0 sm:static z-50' >
+    <div>
         <div
             className="block xl:hidden m-2 ml-4 mt-3 text-xl cursor-pointer"
             onClick={() => setShowSidebar(prev => !prev)}
@@ -36,15 +43,14 @@ const Sidebar = () => {
                 <motion.div 
                     key={'sidebar_anm'}
                     {...sidebarAnimation}
-                    className="xl:w-400 w-20 flex flex-col justify-start bg-white shadow-xl h-[73.5vh]
-                    mb-10 border-r-2 border-gray-100 xl:border-r-0 p-3 duration-300 overflow-y-auto"
-                    onClick={() => setShowSidebar(false)}
+                    className="xl:w-400 md:w-[200px] flex flex-col justify-start bg-white h-[92vh]
+                    pb-8 border-r-2 border-gray-100 xl:border-r-0 p-3 duration-300 overflow-y-auto"
                 >
                     <div className="xl:border-b-2 border-gray-200 xl:pb-4" >
                         <Link href={'/'} >
                             <div className={'normal_link'} >
                                 <p className="text-2xl"><AiFillHome /></p>
-                                <span className="text-xl hidden xl:block">For You</span>
+                                <span className="text-lg md:text-xl">Home</span>
                             </div>
                         </Link>
                     </div>
