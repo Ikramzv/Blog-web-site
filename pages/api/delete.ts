@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import client from "../../utils/client";
 
-export default async ( req: NextApiRequest,res: NextApiResponse) => {
+const handler = async ( req: NextApiRequest,res: NextApiResponse) => {
     const { postId } = req.body
     try {
         await client.delete(postId , { returnDocuments: true })
@@ -10,3 +10,5 @@ export default async ( req: NextApiRequest,res: NextApiResponse) => {
         return res.status(400).send(error.message)
     }
 }
+
+export default handler

@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import client from "../../utils/client";
 
-export default async function(req : NextApiRequest ,res: NextApiResponse) {
+const handler = async function(req : NextApiRequest ,res: NextApiResponse) {
     if(req.method === 'POST') {
         try {
             const user = req.body
@@ -13,3 +13,5 @@ export default async function(req : NextApiRequest ,res: NextApiResponse) {
         }
     }
 }
+
+export default handler

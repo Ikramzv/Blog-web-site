@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import client from "../../utils/client";
 import { usersOfMostCommentedAndLikedPost } from "../../utils/queries";
 
-export default async(req: NextApiRequest,res: NextApiResponse) => {
+const handler = async(req: NextApiRequest,res: NextApiResponse) => {
     console.log('query' , req.query)
     try {
         const query = usersOfMostCommentedAndLikedPost()
@@ -13,3 +13,5 @@ export default async(req: NextApiRequest,res: NextApiResponse) => {
         return res.status(400).send(error.message)
     }
 }
+
+export default handler

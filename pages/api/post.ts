@@ -3,7 +3,7 @@ import client from "../../utils/client";
 import { allPostsQuery } from "../../utils/queries";
 
 
-export default async function (
+const handler = async function (
     req: NextApiRequest,
     res: NextApiResponse
 ) { 
@@ -23,3 +23,6 @@ export default async function (
         return res.status(201).json(post)
     }
 }
+
+
+export default handler

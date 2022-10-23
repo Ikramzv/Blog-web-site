@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { PostType } from "../../types/Post";
 import client from "../../utils/client";
 
-export default async(req: NextApiRequest,res: NextApiResponse) => {
+const handler =  async(req: NextApiRequest,res: NextApiResponse) => {
     // Like api
     if(req.body.type === 'like') {
         const { userId , postId } = req.body
@@ -69,3 +69,6 @@ export default async(req: NextApiRequest,res: NextApiResponse) => {
     }
 
 }   
+
+
+export default handler

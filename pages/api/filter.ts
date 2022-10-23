@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import client from '../../utils/client'
 import { filterPostsByQuery } from '../../utils/queries'
 
-export default async (
+const handler = async (
     req: NextApiRequest ,res : NextApiResponse
 ) => {
     const filter = Object.keys(req.query).reduce((initial , key) => {
@@ -31,3 +31,6 @@ export default async (
         return res.status(400).send(error.message)
     }
 }
+
+
+export default handler
