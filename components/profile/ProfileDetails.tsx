@@ -44,7 +44,7 @@ const ProfileDetails = ({ user, details }: Props) => {
             />
           </div>
           {detailData.map((data,i) => (
-            <div className={`flex flex-col justify-center items-center col-span-1 border-0 ${i !== 1 && 'sm:border-2 sm:border-y-0'}`} >
+            <div key={data.key} className={`flex flex-col justify-center items-center col-span-1 border-0 ${i !== 1 && 'sm:border-2 sm:border-y-0'}`} >
               <span className="text-gray-700 font-semibold" >{details[data.key] || user[data.key]}</span>
               <p className="flex items-center gap-2" >
                 <span className={`font-semibold text-lg ${data.text !== 'Posts' && 'hidden sm:block'}`}>{data.text}</span> 

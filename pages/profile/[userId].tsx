@@ -84,7 +84,7 @@ export const getStaticProps: GetStaticProps = async({ params }) => {
   const { userId } = params
   const query = singleUserQuery(userId)
   const user: PostedBy & { posts: PostType[] } = await client.fetch(query)
-  const mostLikedPostOfUser = [...user.posts].sort((a,b) => b.likes.length - a.likes.length)[0]
+  const mostLikedPostOfUser = typeof user?.posts === 'undefined' ? null : [...user.posts].sort((a,b) => b.likes.length - a.likes.length)[0]
   return {
     props: {
       user,
