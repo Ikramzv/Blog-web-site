@@ -47,7 +47,7 @@ const Profile: NextPage<Props> = ({ user, mostLikedPostOfUser }) => {
   } , [storedPosts])
 
   return (
-    <div className="flex flex-col h-[88vh] gap-2 bg-gray-50 lg:px-4 rounded-md">
+    <div className="flex flex-col h-[88vh] gap-2 bg-gray-50 px-2 lg:px-4 rounded-md">
       <div className="-z-40 fixed left-0 top-0 right-0 bottom-0">
         <Image
           src={mostLikedPostOfUser.image.asset.url}
@@ -55,10 +55,10 @@ const Profile: NextPage<Props> = ({ user, mostLikedPostOfUser }) => {
         />
         <div className="absolute left-0 top-0 bottom-0 right-0 bg-white opacity-50" ></div>
       </div>
-      <div className="grid grid-cols-4 py-2 px-4 bg-gray-200 -mx-4" >
+      <div className="flex-[1.5] grid gap-y-3 grid-rows-2 md:grid-rows-1 grid-cols-3 md:grid-cols-6 py-2 px-4 -mx-2 lg:-mx-4" >
         <ProfileDetails user={user} details={details} />
       </div>
-      <div className="flex-1 overflow-y-auto " >
+      <div className="flex-[6] overflow-y-auto pb-10 sm:pb-5 " >
         {storedPosts.map((post) => (
           <Post key={post._id} post={post} />
         ))}
