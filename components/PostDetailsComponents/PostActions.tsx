@@ -67,7 +67,7 @@ function PostActions({post}: Props) {
     } , [post.likes.length , userProfile])
 
   return (
-    <div className='sm:ml-auto flex items-center gap-5 mb-3 md:mb-0 ' >
+    <div className='px-4 sm:px-0 sm:ml-auto flex items-center gap-5 mb-3 md:mb-0 ' >
         <Button
             text={'Like'} 
             icon={!likes ? <IoMdHeartEmpty className={`text-lg text-red-500`} /> : <IoMdHeart className='text-lg text-white' />} 
